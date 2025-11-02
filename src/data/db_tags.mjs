@@ -33,7 +33,7 @@ export const initialTags = [
 		id: 7,
 		title: "catalysis",
 		alias: "catalysis"
-		
+
 	},
 	{
 		id: 8,

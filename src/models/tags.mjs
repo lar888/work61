@@ -33,18 +33,18 @@ export const addTag = (tag) => {
 }
 
 export const replaceTag = (id, newTagData) => {
-  const index = tags.findIndex(t => t.id === parseInt(id))
+	const index = tags.findIndex(t => t.id === parseInt(id))
 
-  if (index === -1) return null
+	if (index === -1) return null
 
-  const updatedTag = {
-    ...tags[index],
-    ...newTagData,
-    alias: slugify(newTagData.alias || newTagData.title)
-  }
+	const updatedTag = {
+		...tags[index],
+		...newTagData,
+		alias: slugify(newTagData.alias || newTagData.title)
+	}
 
-  tags[index] = updatedTag
-  return updatedTag
+	tags[index] = updatedTag
+	return updatedTag
 }
 
 export const deleteTag = (id) => {

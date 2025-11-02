@@ -34,7 +34,7 @@ export const addCategory = (category) => {
 
 export const replaceCategory = (id, newCategoryData) => {
 	const index = categories.findIndex(c => c.id === parseInt(id))
-	
+
 	if (index !== -1) {
 		const updatedCategory = {
 			...categories[index],
