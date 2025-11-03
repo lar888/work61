@@ -6,6 +6,7 @@ import {
 	replaceCategory,
 	deleteCategory,
 	getNextId,
+	patchCategory,
 } from '../models/categories.mjs'
 import * as logger from '../utils/logger.mjs'
 
@@ -14,7 +15,7 @@ export const getCategoriesAPI = (req, res) => {
 	try {
 		logger.log('API: Отримання списку категорій')
 		const list = getAllCategories()
-	
+
 		res.status(HTTP_STATUS.OK).json({
 			success: true,
 			data: list,
@@ -76,6 +77,36 @@ export const createCategoryAPI = (req, res) => {
 		})
 	} catch (error) {
 		logger.error('API: Помилка при створенні категорії:', error)
+		res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+			success: false,
+			error: 'Внутрішня помилка сервера'
+		})
+	}
+}
+
+export const updateCategoryAPI = (req, res) => {
+	try {
+		const { id } = req.params
+		logger.log(`API: Часткове оновлення категорії (PATCH) з ID ${id}`)
+
+		const updatedCategory = patchCategory(id, req.validatedCategoryUpdates)
+
+		if (!updatedCategory) {
+			logger.log(`API: Категорія з ID ${id} не знайдена для оновлення`)
+			return res.status(HTTP_STATUS.NOT_FOUND).json({
+				success: false,
+				error: 'Категорія не знайдена'
+			})
+		}
+
+		logger.log('API: Категорія успішно оновлена', updatedCategory)
+		res.status(HTTP_STATUS.OK).json({
+			success: true,
+			data: updatedCategory,
+			message: 'Категорія успішно оновлена'
+		})
+	} catch (error) {
+		logger.error('API: Помилка при оновленні категорії:', error)
 		res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
 			success: false,
 			error: 'Внутрішня помилка сервера'

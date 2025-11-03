@@ -1,4 +1,4 @@
-import { validatePutTag } from '../models/tags.mjs'
+import { validatePatchTag, validatePutTag } from '../models/tags.mjs'
 import { buildErrorResponse } from '../utils/functions.mjs'
 
 // === POST /api/tags ===
@@ -26,5 +26,21 @@ export const validateTagPutRequest = (req, res, next) => {
 	}
 
 	req.validatedTag = payload
+	next()
+}
+
+// === PATCH /api/tags/:id ===
+export const validateTagPatchRequest = (req, res, next) => {
+	const updates = {}
+
+	if ('title' in req.body)
+		updates.title =
+			typeof req.body.title === 'string' ? req.body.title.trim() : req.body.title
+
+	if (!validatePatchTag(updates)) {
+		return buildErrorResponse(res, 'Невірні дані тега: перевірте поля, що оновлюються')
+	}
+
+	req.validatedTagUpdates = updates
 	next()
 }

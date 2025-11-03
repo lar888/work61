@@ -34,7 +34,6 @@ export const addCategory = (category) => {
 
 export const replaceCategory = (id, newCategoryData) => {
 	const index = categories.findIndex(c => c.id === parseInt(id))
-
 	if (index !== -1) {
 		const updatedCategory = {
 			...categories[index],
@@ -43,6 +42,15 @@ export const replaceCategory = (id, newCategoryData) => {
 		}
 		categories[index] = updatedCategory
 		return updatedCategory
+	}
+	return null
+}
+
+export const patchCategory = (id, partialCategoryData) => {
+	const index = categories.findIndex(c => c.id === parseInt(id))
+	if (index !== -1) {
+		categories[index] = { ...categories[index], ...partialCategoryData }
+		return categories[index]
 	}
 	return null
 }
@@ -58,6 +66,15 @@ export const deleteCategory = (id) => {
 // ------------------------------
 // Validation
 // ------------------------------
+
+export const validatePatchCategory = (updates) => {
+	if (!updates || typeof updates !== 'object') return false
+	if (updates.title === undefined) return false
+	if (updates.title !== undefined) {
+		if (typeof updates.title !== 'string' || updates.title.trim() === '') return false
+	}
+	return true
+}
 
 export const validatePutCategory = (category) => {
 	if (!category) return false

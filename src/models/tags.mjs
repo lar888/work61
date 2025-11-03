@@ -47,6 +47,15 @@ export const replaceTag = (id, newTagData) => {
 	return updatedTag
 }
 
+export const patchTag = (id, partialTagData) => {
+	const index = tags.findIndex(t => t.id === parseInt(id))
+	if (index !== -1) {
+		tags[index] = { ...tags[index], ...partialTagData }
+		return tags[index]
+	}
+	return null
+}
+
 export const deleteTag = (id) => {
 	const index = tags.findIndex(t => t.id === parseInt(id))
 	if (index !== -1) {
@@ -58,6 +67,15 @@ export const deleteTag = (id) => {
 // ------------------------------
 // Validation
 // ------------------------------
+
+export const validatePatchTag = (updates) => {
+	if (!updates || typeof updates !== 'object') return false
+	if (updates.title === undefined) return false
+	if (updates.title !== undefined) {
+		if (typeof updates.title !== 'string' || updates.title.trim() === '') return false
+	}
+	return true
+}
 
 export const validatePutTag = (tag) => {
 	if (!tag) return false

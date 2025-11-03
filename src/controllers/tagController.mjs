@@ -6,6 +6,7 @@ import {
 	replaceTag,
 	deleteTag,
 	getNextId,
+	patchTag,
 } from '../models/tags.mjs'
 import * as logger from '../utils/logger.mjs'
 
@@ -76,6 +77,37 @@ export const createTagAPI = (req, res) => {
 		})
 	} catch (error) {
 		logger.error('API: Помилка при створенні тега:', error)
+		res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+			success: false,
+			error: 'Внутрішня помилка сервера'
+		})
+	}
+}
+
+// API: Оновлення тега (JSON)
+export const updateTagAPI = (req, res) => {
+	try {
+		const { id } = req.params
+		logger.log(`API: Часткове оновлення тега (PATCH) з ID ${id}`)
+
+		const updatedTag = patchTag(id, req.validatedTagUpdates)
+
+		if (!updatedTag) {
+			logger.log(`API: Тег з ID ${id} не знайдений для оновлення`)
+			return res.status(HTTP_STATUS.NOT_FOUND).json({
+				success: false,
+				error: 'Тег не знайдений'
+			})
+		}
+
+		logger.log('API: Тег успішно оновлений', updatedTag)
+		res.status(HTTP_STATUS.OK).json({
+			success: true,
+			data: updatedTag,
+			message: 'Тег успішно оновлений'
+		})
+	} catch (error) {
+		logger.error('API: Помилка при оновленні тега:', error)
 		res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
 			success: false,
 			error: 'Внутрішня помилка сервера'

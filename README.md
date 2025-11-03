@@ -134,63 +134,64 @@ DELETE /api/resource/:id
 🧩 Example: Posts (/api/posts)
 POST request:
 {
-	"title": "Molecular Dynamics of Protein Folding",
-	"description": "Simulations reveal new folding pathways of small proteins.",
-	"category": "Biophysics",
-	"tags": ["protein", "folding", "simulation"],
-	"year": 2025,
-	"image": "https://picsum.photos/640/480?random=42",
-	"selected": false
+"id": 1,
+"title": "Molecular Dynamics of Protein Folding",
+"alias": "molecular-dynamics-of-protein-folding",
+"description": "Computational simulations reveal new insights into folding pathways of small proteins.",
+"category_id": 1,
+"year": 2023,
+"image": "https://picsum.photos/640/480?random=1",
+"selected": true
 }
 
 Response:
 {
-	"success": true,
-	"data": { ... },
-	"message": "Пост успішно створено"
+"success": true,
+"data": { ... },
+"message": "Пост успішно створено"
 }
 
 📰 Example: News (/api/news)
 Sample Data:
 {
-	"id": 1,
-	"image": "https://picsum.photos/640/480?random=1",
-	"date": "2025-01-05",
-	"description": "Researchers identify a new protein folding pathway that may explain resilience in neurodegenerative diseases."
+"id": 1,
+"image": "https://picsum.photos/640/480?random=1",
+"date": "2025-01-05",
+"description": "Researchers identify a new protein folding pathway that may explain resilience in neurodegenerative diseases."
 }
 
 🔬 Example: Research (/api/research)
 Sample Data:
 {
-	"id": 1,
-	"image": "https://picsum.photos/640/480?random=1",
-	"title": "Electron and Proton Transfer in Proteins",
-	"description": "Life depends on the efficient movement of electrons and protons through protein structures. Our research focuses on the physical principles and structural determinants that govern these transfer processes, from redox cofactors to hydrogen-bonded networks. By combining biochemical, spectroscopic, and computational approaches, we seek to understand how proteins optimize charge transfer for processes such as respiration, photosynthesis, and enzymatic catalysis."
+"id": 1,
+"image": "https://picsum.photos/640/480?random=1",
+"title": "Electron and Proton Transfer in Proteins",
+"description": "Life depends on the efficient movement of electrons and protons through protein structures. Our research focuses on the physical principles and structural determinants that govern these transfer processes, from redox cofactors to hydrogen-bonded networks. By combining biochemical, spectroscopic, and computational approaches, we seek to understand how proteins optimize charge transfer for processes such as respiration, photosynthesis, and enzymatic catalysis."
 }
 
 👩‍🔬 Example: Users (/api/users)
 Sample Data:
 {
-	"id": 1,
-	"image": "https://picsum.photos/640/480?random=1",
-	"member": "Alice Morgan - Post Doctoral Researcher",
-	"description": "Focuses on protein folding mechanisms and misfolding in neurodegenerative diseases. Her work combines biochemical assays with computational simulations to understand how proteins adopt stable structures and what happens when these processes go wrong, providing insights into Alzheimer’s and Parkinson’s disease."
+"id": 1,
+"image": "https://picsum.photos/640/480?random=1",
+"member": "Alice Morgan - Post Doctoral Researcher",
+"description": "Focuses on protein folding mechanisms and misfolding in neurodegenerative diseases. Her work combines biochemical assays with computational simulations to understand how proteins adopt stable structures and what happens when these processes go wrong, providing insights into Alzheimer’s and Parkinson’s disease."
 }
 
 📂 Categories API Example (/api/categories)
 Sample Data:
 {
-	"id": 1,
-	"title": "Biophysics",
-	"alias": "biophysics"
+"id": 1,
+"title": "Biophysics",
+"alias": "biophysics"
 }
 
 🏷️ Tags API Example (/api/tags)
 Sample Data:
 {
-	"id": 1,
-	"title": "protein folding",
-	"alias": "protein-folding"
+"id": 1,
+"title": "protein folding",
+"alias": "protein-folding"
 }
 
 ⚠️ Error Handling
@@ -205,8 +206,8 @@ Located in middleware/validation.mjs:
 Validates fields like title, description, category, tags, year, etc.
 Returns:
 {
-	"success": false,
-	"error": "Невірні дані посту: перевірте title, description, category, tags, year, image та selected"
+"success": false,
+"error": "Невірні дані посту: перевірте title, description, category, tags, year, image та selected"
 }
 
 📜 HTTP Configuration
@@ -237,9 +238,11 @@ info, warn, debug
 🧪 Example Curl Commands
 
 # Get all posts (with Basic Auth enabled)
+
 curl -u admin:12345 http://localhost:3000/api/posts
 
 # Create new post
+
 curl -X POST http://localhost:3000/api/posts \
  -u admin:12345 \
  -H "Content-Type: application/json" \
@@ -265,4 +268,5 @@ routes/web/ Simple web routes
 utils/logger.mjs Logging utility
 
 🏁 License
+
 ## MIT License — free for personal and educational use.
